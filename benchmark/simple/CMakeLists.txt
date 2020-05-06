@@ -3,8 +3,6 @@ if(NOT TARGET hsm::hsm)
     find_package(hsm CONFIG REQUIRED)
 endif()
 
-
-
 add_executable(simple_euml euml.cpp)
 set_target_properties(simple_euml
           PROPERTIES
