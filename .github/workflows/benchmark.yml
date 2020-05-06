@@ -44,6 +44,16 @@ jobs:
         CXX: ${{ matrix.cxx }}
         CC: ${{ matrix.cc}}
 
+    - name: Configure CMake
+      run: |
+        echo $CXX
+        echo $CC
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release 
+      env: 
+        CXX: ${{ matrix.cxx }}
+        CC: ${{ matrix.cc}}
+
     - name: Evaluate Compiletime Benchmark
       run: |
         echo $CXX
