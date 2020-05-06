@@ -1,6 +1,6 @@
 #! /bin/bash
 
-RootPath="../build/bin/"
+RootPath="../build/benchmark/bin/"
 SimpleBenchmarks="simple_hsm simple_sml simple_euml simple_sc "
 ComplexBenchmarks="complex_hsm complex_sml complex_euml complex_sc"
 

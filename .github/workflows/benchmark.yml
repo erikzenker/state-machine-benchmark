@@ -1,0 +1,69 @@
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cxx: ["g++-8", "g++-9", "clang++-8", "clang++-9"]
+        include: 
+
+          - cxx: "g++-8"
+            cc: "gcc-8"
+          - cxx: "g++-9"
+            cc: "gcc-9"
+          - cxx: "clang++-8"
+            cc: "clang-8"
+          - cxx: "clang++-9"
+            cc: "clang-9"
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Install System Dependencies
+      run: sudo apt install cmake g++-8 g++-9 clang-8 clang-9 python-pip
+        
+    - name: Install Conan
+      run: |
+        sudo pip install conan
+        conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+        conan remote add conan-erikzenker https://api.bintray.com/conan/erikzenker/conan-erikzenker
+
+    - name: Install Conan Dependencies
+      run: |
+        echo $CXX
+        echo $CC
+        mkdir build && cd build
+        conan install .. -s compiler.libcxx=libstdc++11 --build missing
+      env: 
+        CXX: ${{ matrix.cxx }}
+        CC: ${{ matrix.cc}}
+
+    - name: Configure CMake
+      run: |
+        echo $CXX
+        echo $CC
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        cmake --build .
+      env: 
+        CXX: ${{ matrix.cxx }}
+        CC: ${{ matrix.cc}}
+
+    - name: Evaluate Compiletime Benchmark
+      run: |
+        echo $CXX
+        echo $CC
+        cd benchmark && ./evaluate_compiletime.sh
+      env: 
+        CXX: ${{ matrix.cxx }}
+        CC: ${{ matrix.cc}}
+      
+    - name: Evaluate Runtime Benchmark
+      run: |
+        cd benchmark && ./evaluate_runtime.sh
