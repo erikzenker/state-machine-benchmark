@@ -49,7 +49,8 @@ jobs:
         echo $CXX
         echo $CC
         cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Release 
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        cmake --build .
       env: 
         CXX: ${{ matrix.cxx }}
         CC: ${{ matrix.cc}}
