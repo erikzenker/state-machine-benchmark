@@ -29,8 +29,11 @@ jobs:
       run: sudo apt install cmake g++-8 g++-9 clang-8 clang-9 python-pip
         
     - name: Install Conan
-      run: sudo pip install conan
-    
+      run: |
+        sudo pip install conan
+        conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+        conan remote add conan-erikzenker https://api.bintray.com/conan/erikzenker/conan-erikzenker
+
     - name: Install Conan Dependencies
       run: |
         echo $CXX
