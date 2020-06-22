@@ -1,6 +1,8 @@
 # State Machine Benchmark
 ![Benchmark](https://github.com/erikzenker/state-machine-benchmark/workflows/Benchmark/badge.svg)
 
+Updated on 22.06.2020
+
 ## Runtime Benchmark Results
 ### Gcc 8
  <table style="width:100%">
