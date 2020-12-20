@@ -52,6 +52,31 @@
   </tr>
 </table>
 
+### Gcc 10
+ <table style="width:100%">
+  <tr>
+    <th>Benchmark</th>
+    <th><a href="https://github.com/erikzenker/hsm">Hsm</a></th>
+    <th><a href="https://boost-experimental.github.io/sml/index.html">Sml</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/msm/doc/HTML/index.html">Msm</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/statechart/doc/index.html">Statechart</a></th>
+  </tr>
+  <tr>
+    <td><a href="benchmark/simple/">Simple state machine</a></td>
+    <td><center>94 ms</center></td>
+    <td><center>0 ms</center></td>
+    <td><center>24 ms</center></td>
+    <td><center>369 ms</center></td>
+  </tr>
+  <tr>
+    <td><a href="benchmark/complex/">Complex state machine</a></td>
+    <td><center>826 ms</center></td>
+    <td><center>790 ms</center></td>
+    <td><center>801 ms</center></td>
+    <td><center>1335 ms</center></td>
+  </tr>
+</table>
+
 ### Clang 8
  <table style="width:100%">
   <tr>
@@ -101,6 +126,32 @@
     <td><center>1374 ms</center></td>
   </tr>
 </table>  
+
+### Clang 10
+ <table style="width:100%">
+  <tr>
+    <th>Benchmark</th>
+    <th><a href="https://github.com/erikzenker/hsm">Hsm</a></th>
+    <th><a href="https://boost-experimental.github.io/sml/index.html">Sml</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/msm/doc/HTML/index.html">Msm</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/statechart/doc/index.html">Statechart</a></th>
+  </tr>
+  <tr>
+    <td><a href="benchmark/simple/">Simple state machine</a></td>
+    <td><center>112 ms</center></td>
+    <td><center>22 ms</center></td>
+    <td><center>22 ms</center></td>
+    <td><center>530 ms</center></td>
+  </tr>
+  <tr>
+    <td><a href="benchmark/complex/">Complex state machine</a></td>
+    <td><center>815 ms</center></td>
+    <td><center>856 ms</center></td>
+    <td><center>882 ms</center></td>
+    <td><center>1363 ms</center></td>
+  </tr>
+</table>  
+
 
 ## Compiletime Benchmark Results
 ### Gcc 8
@@ -153,6 +204,31 @@
   </tr>
 </table>
 
+### Gcc 10
+ <table style="width:100%">
+  <tr>
+    <th>Benchmark</th>
+    <th><a href="https://github.com/erikzenker/hsm">Hsm</a></th>
+    <th><a href="https://boost-experimental.github.io/sml/index.html">Sml</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/msm/doc/HTML/index.html">Msm</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/statechart/doc/index.html">Statechart</a></th>
+  </tr>
+  <tr>
+    <td><a href="benchmark/simple/">Simple state machine</a></td>
+    <td><center>6.02 s</center></td>
+    <td><center>0.72 s</center></td>
+    <td><center>9.54 s </center></td>
+    <td><center>2.39 s</center></td>
+  </tr>
+  <tr>
+    <td><a href="benchmark/complex/">Complex state machine</a></td>
+    <td><center>49.71 s</center></td>
+    <td><center>3.29 s</center></td>
+    <td><center>50.02 s</center></td>
+    <td><center>6.89 s</center></td>
+  </tr>
+</table>
+
 ### Clang 8
  <table style="width:100%">
   <tr>
@@ -200,5 +276,30 @@
     <td><center>3.01 s</center></td>
     <td><center>25.54 s</center></td>
     <td><center>4.27 s</center></td>
+  </tr>
+</table>  
+
+### Clang 10
+ <table style="width:100%">
+  <tr>
+    <th>Benchmark</th>
+    <th><a href="https://github.com/erikzenker/hsm">Hsm</a></th>
+    <th><a href="https://boost-experimental.github.io/sml/index.html">Sml</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/msm/doc/HTML/index.html">Msm</a></th>
+    <th><a href="https://www.boost.org/doc/libs/1_73_0/libs/statechart/doc/index.html">Statechart</a></th>
+  </tr>
+  <tr>
+    <td><a href="benchmark/simple/">Simple state machine</a></td>
+    <td><center>9.48 s</center></td>
+    <td><center>0.83 s</center></td>
+    <td><center>7.32 s </center></td>
+    <td><center>2.10 s</center></td>
+  </tr>
+  <tr>
+    <td><a href="benchmark/complex/">Complex state machine</a></td>
+    <td><center>61.59 s</center></td>
+    <td><center>3.93 s</center></td>
+    <td><center>35.83 s</center></td>
+    <td><center>6.93 s</center></td>
   </tr>
 </table>  
