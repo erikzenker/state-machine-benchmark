@@ -1,5 +1,7 @@
 name: Benchmark
 on:
+  schedule:
+    - cron: 0 0 * * *
   push:
     branches: [ master ]
   pull_request:
@@ -36,6 +38,16 @@ jobs:
         sudo pip3 install conan
         conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
         conan remote add conan-erikzenker https://api.bintray.com/conan/erikzenker/conan-erikzenker
+
+    - name: Cache Conan
+      id: cache-conan
+      uses: actions/cache@v2
+      with:
+        path: ~/.conan
+        key:
+          conan-cache-${{ runner.os }}-${{ matrix.cxx }}
+        restore-keys: |
+          conan-cache-${{ runner.os }}-${{ matrix.cxx }}
 
     - name: Install Conan Dependencies
       run: |
