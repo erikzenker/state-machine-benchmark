@@ -1,11 +1,6 @@
 #! /usr/bin/gnuplot
 
-set terminal svg noenhanced
-set title "Hsm Simple Benchmark Results"
-set output "simple_benchmark_results.svg"
-set boxwidth 0.5 relative
-set style fill solid 1.0
-set ylabel "runtime [ms]"
-set ytics nomirror
-set xtics nomirror
-plot "simple_benchmark_results.dat" using 2: xtic(1) with boxes notitle linecolor rgb "orange"
+set datafile separator ','
+set xdata time
+set timefmt "%Y-%m-%dT%H:%M:%S"
+plot "simple_runtime_history.csv" using 1:3, '' using 1:4, '' using 1:5, '' using 1:6
