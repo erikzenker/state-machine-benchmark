@@ -33,3 +33,4 @@ echo $ComplexResults >> $ComplexRuntimeHistoryFile
 cat $SimpleRuntimeHistoryFile
 echo ""
 cat $ComplexRuntimeHistoryFile
+echo ""
