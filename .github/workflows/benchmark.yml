@@ -48,20 +48,21 @@ jobs:
         path: ~/.conan
         key:
           conan-cache-${{ runner.os }}-${{ matrix.cxx }}
-        restore-keys: |
-          conan-cache-${{ runner.os }}-${{ matrix.cxx }}
-
+    - name: Get current date
+      id: date
+      run: echo "CURRENT_DATE=$(date +'%Y-%m-%dT%H:%M:%S' --utc)" >> $GITHUB_ENV
     - name: Cache Result History
-      id: cache-result-history
       uses: actions/cache@v2
+      env:
+        cache-name: result-history
       with:
         path: | 
           benchmark/simple_runtime_history.csv
           benchmark/complex_runtime_history.csv
         key:
-          result-history-${{ runner.os }}-${{ matrix.cxx }}
-        restore-keys: |
-          result-history-${{ runner.os }}-${{ matrix.cxx }}
+          ${{ env.cache-name }}-${{ runner.os }}-${{ matrix.cxx }}-${{ env.CURRENT_DATE }}
+        restore-keys:
+          ${{ env.cache-name }}-${{ runner.os }}-${{ matrix.cxx }}
           
     - name: Install Conan Dependencies
       run: |
