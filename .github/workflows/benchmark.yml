@@ -103,3 +103,4 @@ jobs:
         cd benchmark 
         gnuplot simple_runtime.pl -p
         gnuplot complex_runtime.pl -p
+
