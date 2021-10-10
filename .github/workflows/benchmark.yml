@@ -38,8 +38,7 @@ jobs:
     - name: Install Conan
       run: |
         sudo pip3 install conan
-        conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-        conan remote add conan-erikzenker https://api.bintray.com/conan/erikzenker/conan-erikzenker
+        conan remote add cci-beta https://center.conan.io False
 
     - name: Cache Conan
       id: cache-conan
