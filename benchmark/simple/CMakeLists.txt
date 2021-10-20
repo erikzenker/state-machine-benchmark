@@ -1,7 +1,5 @@
 # dependencies
-if(NOT TARGET hsm::hsm)
-    find_package(hsm CONFIG REQUIRED)
-endif()
+find_package(hsm REQUIRED)
 
 add_executable(simple_euml euml.cpp)
 set_target_properties(simple_euml
