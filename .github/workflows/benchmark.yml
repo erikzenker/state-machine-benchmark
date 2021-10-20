@@ -67,8 +67,8 @@ jobs:
       run: |
         echo $CXX
         echo $CC
-        mkdir build && cd build
-        conan install .. -s compiler.libcxx=libstdc++11 --build missing
+        mkdir -p build/dependencies/conan
+        conan install . -if build/dependencies/conan -s compiler.libcxx=libstdc++11 --build missing
       env: 
         CXX: ${{ matrix.cxx }}
         CC: ${{ matrix.cc}}
@@ -77,9 +77,8 @@ jobs:
       run: |
         echo $CXX
         echo $CC
-        cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Release
-        cmake --build .
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -D "CMAKE_MODULE_PATH=${PWD}/build/dependencies/conan"
+        cmake --build build/ 
       env: 
         CXX: ${{ matrix.cxx }}
         CC: ${{ matrix.cc}}

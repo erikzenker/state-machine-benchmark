@@ -1,6 +1,6 @@
 #! /bin/bash
 
-RootPath="../build/benchmark/bin/"
+RootPath="../build/benchmark/"
 SimpleBenchmarks="simple_hsm simple_sml simple_euml simple_sc "
 ComplexBenchmarks="complex_hsm complex_sml complex_euml complex_sc"
 Date=`date +"%Y-%m-%dT%H:%M:%S" --utc`
@@ -13,14 +13,14 @@ ComplexRuntimeHistoryFile="complex_runtime_history.csv"
 echo "date: $Date"
 echo "commit: $Commit"
 for Name in $SimpleBenchmarks; do
-    Benchmark="$RootPath/$Name"
+    Benchmark="$RootPath/simple/$Name"
     Result=$((eval $Benchmark) 2>&1 | sed -e 's/ms//' | grep "execution speed" | awk '{ print $3 }') 
     echo "$Name $Result ms"
     SimpleResults="$SimpleResults,$Result"
 done
 
 for Name in $ComplexBenchmarks; do
-    Benchmark="$RootPath/$Name"
+    Benchmark="$RootPath/complex/$Name"
     Result=$((eval $Benchmark) 2>&1 | sed -e 's/ms//'| grep "execution speed" | awk '{ print $3 }') 
     echo "$Name $Result ms"
     ComplexResults="$ComplexResults,$Result"

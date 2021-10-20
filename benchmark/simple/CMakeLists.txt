@@ -1,5 +1,7 @@
 # dependencies
 find_package(hsm REQUIRED)
+find_package(Boost REQUIRED)
+find_package(sml REQUIRED)
 
 add_executable(simple_euml euml.cpp)
 set_target_properties(simple_euml
@@ -21,3 +23,7 @@ target_link_libraries(simple_hsm
           hsm::hsm)
 
 add_executable(simple_sml sml.cpp)
+target_link_libraries(simple_sml
+        PRIVATE
+          sml::sml)
+

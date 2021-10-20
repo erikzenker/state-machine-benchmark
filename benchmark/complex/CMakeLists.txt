@@ -1,5 +1,7 @@
 # dependencies
 find_package(hsm REQUIRED)
+find_package(Boost REQUIRED)
+find_package(sml REQUIRED)
 
 add_executable(complex_euml euml.cpp)
 set_target_properties(complex_euml
@@ -30,3 +32,7 @@ set_target_properties(complex_hsm
            CXX_STANDARD 17)
 
 add_executable(complex_sml sml.cpp)
+target_link_libraries(complex_sml
+        PRIVATE
+          sml::sml)
+
