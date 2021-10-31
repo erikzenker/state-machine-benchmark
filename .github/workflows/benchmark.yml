@@ -12,20 +12,14 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        cxx: ["g++-8", "g++-9", "g++-10", "clang++-8", "clang++-9", "clang++-10"]
-        include: 
-          - cxx: "g++-8"
-            cc: "gcc-8"
-          - cxx: "g++-9"
-            cc: "gcc-9"
-          - cxx: "g++-10"
-            cc: "gcc-10"
-          - cxx: "clang++-8"
-            cc: "clang-8"
-          - cxx: "clang++-9"
-            cc: "clang-9"
-          - cxx: "clang++-10"
-            cc: "clang-10"
+        version: [8,9,10]
+        compiler:
+          - { cc: gcc, cxx: g++ }
+          - { cc: clang, cxx: clang++ }
+
+    env:
+      CC: ${{ matrix.compiler.cc }}-${{ matrix.version }}
+      CXX: ${{ matrix.compiler.cxx }}-${{ matrix.version }}
 
     steps:
     - uses: actions/checkout@v2
@@ -33,7 +27,7 @@ jobs:
     - name: Install System Dependencies
       run: |
         sudo apt update
-        sudo apt install cmake g++-8 g++-9 g++-10 clang-8 clang-9 clang-10 python3-pip gnuplot
+        sudo apt install cmake g++-8 g++-9 g++-10 clang-8 clang-9 clang-10 python3-pip gnuplot valgrind
         
     - name: Install Conan
       run: |
@@ -46,7 +40,7 @@ jobs:
       with:
         path: ~/.conan
         key:
-          conan-cache-${{ runner.os }}-${{ matrix.cxx }}
+          conan-cache-${{ runner.os }}-${{ env.cxx }}
     - name: Get current date
       id: date
       run: echo "CURRENT_DATE=$(date +'%Y-%m-%dT%H:%M:%S' --utc)" >> $GITHUB_ENV
@@ -59,9 +53,9 @@ jobs:
           benchmark/simple_runtime_history.csv
           benchmark/complex_runtime_history.csv
         key:
-          ${{ env.cache-name }}-${{ runner.os }}-${{ matrix.cxx }}-${{ env.CURRENT_DATE }}
+          ${{ env.cache-name }}-${{ runner.os }}-${{ env.cxx }}-${{ env.CURRENT_DATE }}
         restore-keys:
-          ${{ env.cache-name }}-${{ runner.os }}-${{ matrix.cxx }}
+          ${{ env.cache-name }}-${{ runner.os }}-${{ env.cxx }}
           
     - name: Install Conan Dependencies
       run: |
@@ -69,9 +63,6 @@ jobs:
         echo $CC
         mkdir -p build/dependencies/conan
         conan install . -if build/dependencies/conan -s compiler.libcxx=libstdc++11 --build missing
-      env: 
-        CXX: ${{ matrix.cxx }}
-        CC: ${{ matrix.cc}}
 
     - name: Configure CMake
       run: |
@@ -79,22 +70,29 @@ jobs:
         echo $CC
         cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -D "CMAKE_MODULE_PATH=${PWD}/build/dependencies/conan"
         cmake --build build/ 
-      env: 
-        CXX: ${{ matrix.cxx }}
-        CC: ${{ matrix.cc}}
 
     - name: Evaluate Compiletime Benchmark
       run: |
         echo $CXX
         echo $CC
         cd benchmark && ./evaluate_compiletime.sh
-      env: 
-        CXX: ${{ matrix.cxx }}
-        CC: ${{ matrix.cc}}
       
     - name: Evaluate Runtime Benchmark
       run: |
         cd benchmark && ./evaluate_runtime.sh
+
+    - name: Evaluate Memory Benchmark
+      run: |
+        echo $CXX
+        echo $CC
+        rm build/* -rf
+        mkdir -p build/dependencies/conan
+        conan install . -if build/dependencies/conan -s compiler.libcxx=libstdc++11 --build missing
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -D "CMAKE_MODULE_PATH=${PWD}/build/dependencies/conan"
+        cd benchmark && ./evaluate_compilememory.sh        
+      env:
+        CC: valgrind --tool=massif --pages-as-heap=yes ${{ matrix.compiler.cc }}-${{ matrix.version }}
+        CXX: valgrind --tool=massif --pages-as-heap=yes ${{ matrix.compiler.cxx }}-${{ matrix.version }}
 
     - name: Visualize Runtime Benchmark
       run: |
